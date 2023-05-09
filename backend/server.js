@@ -47,11 +47,16 @@ mongoose.connect(uri, {
     console.log("MongoDB connected")
 })
   .catch(err => console.log(err))
-    
-    
-// start server
-//app.listen(PORT, () => {
-//     console.log("Server is running on port" + PORT)
-// });
 
-module.exports = app;
+app.use(bodyParser.json())
+
+// routes
+app.get("/", (res, req) => {
+    res.send("yay home page")
+})
+  
+
+// start server
+app.listen(2000, () => {
+    console.log("Listening at port 2000")
+})

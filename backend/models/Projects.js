@@ -3,7 +3,7 @@ const Mongoose = require("mongoose");
 const ProjectsSchema = new Mongoose.Schema({
   name: { type: String, required: true },
   description: String,
-  color: String,
+  status: { type: String, default: "not-done" },
   created_at: {
     type: Date,
     default: Date.now,

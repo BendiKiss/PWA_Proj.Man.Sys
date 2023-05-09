@@ -1,6 +1,7 @@
+// importing model and deps
 const Express = require("express");
 const Router = Express.Router();
-const Task = require("../models/Tasks");
+const Task = require("../models/task");
 
 // Get all Task routes
 Router.get("/", async (Req, Res) => {

@@ -1,8 +1,9 @@
-const express = require("express")
-const mongoose = require("mongoose")
-const bodyParser = require("body-parser")
-//create out express app
-const app = express()
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const app = express();
+
+require ("dotenv-flow").config();
 
 // Handle CORS + middleware
 app.use(function( req, res, next){
@@ -15,48 +16,41 @@ app.use(function( req, res, next){
 //swagger
 
 
-//routes
-app.get("/", (req, res) => {
-    res.status(200).send({message: "Welcome to the PWA project"});
-})
+// Import routes
+const projectsRoutes = require("./routes/project");
+const tasksRoutes = require("./routes/task");
+const authRoutes = require("./routes/auth");
 
-// // Import project routes
-// const ProjectsRoute = require("./routes/Projects");
-// app.use("/projects", ProjectsRoute);
-// // Import list routes
-// const ListsRoute = require("./routes/Lists");
-// app.use("/lists", ListsRoute);
-// // Import task routes
-// const TasksRoute = require("./routes/Tasks");
-// app.use("/tasks", TasksRoute);
-// // Import user routes
-// const UserRoute = require("./routes/Users");
-// app.use("/users", UserRoute);
+//routes
+app.get("/api/welcome", (req, res) => {
+
+    res.status(200).send({message: "Welcome to the PWA project"});
+
+});
 
 // parse request of content type JSON
 app.use(bodyParser.json());
 
 //database connection
-const uri = "mongodb+srv://dbuser:053ARzzE7kP2nTfc@restapiproj.utxokik.mongodb.net/boards_dev?retryWrites=true&w=majority"
+mongoose.set('strictQuery', true);
+mongoose.connect(
+    process.env.DBHOST,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .catch(err => console.log("Error connecting to MongoDB: " + error));
 
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-  .then(() => {
-    console.log("MongoDB connected")
-})
-  .catch(err => console.log(err))
+    mongoose.connection.once("open", () =>  console.log("MongoDB connected successfully"));
 
-app.use(bodyParser.json())
+//post, put, delete -> CRUD
+app.use("/api/projects", projectsRoutes);
 
-// routes
-app.get("/", (res, req) => {
-    res.send("yay home page")
-})
-  
+//start-up server
+const PORT = process.env.PORT || 2000;
 
-// start server
-app.listen(2000, () => {
-    console.log("Listening at port 2000")
-})
+app.listen(PORT, function() {
+    console.log("Server is running on port " + PORT);
+});
+
+module.exports = app;

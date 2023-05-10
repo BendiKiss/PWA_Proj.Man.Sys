@@ -7,7 +7,8 @@ const projectSchema = new mongoose.Schema({
 
 //created_at: { type: Date, default: Date.now },
 
-  deadline: {type: String}
+  deadline: {type: String},
+  active: { type: Boolean, default: true}
 
 //UserId: String
 

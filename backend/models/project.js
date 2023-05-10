@@ -1,16 +1,14 @@
 const mongoose = require("mongoose");
 
-const projectSchema = new mongoose.Schema({
+let projectSchema = new mongoose.Schema({
   
-  name: { type: String, required: true },
+  name:        { type: String, required: true },
   description: { type: String },
-
-//created_at: { type: Date, default: Date.now },
-
-  deadline: {type: String},
-  active: { type: Boolean, default: true}
-
-//UserId: String
+  created_at:  { type: Date, default: Date.now },
+  deadline:    { type: String },
+  active:      { type: Boolean, default: true}
+  //owner: { type: String, }
+  //team: { type: String, }
 
 });
 

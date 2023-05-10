@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Project = require("../models/project");
+const project = require("../models/project");
 
 
 //CRUD operations
@@ -8,7 +8,7 @@ const Project = require("../models/project");
 router.post("/", (req, res) => {
   data = req.body;
 
-  product.insertMany(data)
+  project.insertMany(data)
   .then(data => {res.send(data);})
   .catch(err => {res.status(500).send( {message: err.message }); })
 });

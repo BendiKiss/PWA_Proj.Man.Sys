@@ -1,39 +1,16 @@
-const { default: mongoose } = require("mongoose");
-const Mongoose = require("mongoose");
-
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
 const status = ["ToDo", "Doing", "Done"];
 
 
-const TasksSchema = new Mongoose.Schema({
-
-  ListId: String,
+const taskSchema = new mongoose.Schema({
   
-  task: { 
-    type: String,
-    required: true,
-    min: 5,
-    max: 255
-  },
-  description: {
-    type: String,
-    required: false,
-    min: 5,
-    max: 255
-  },
-  status: {
-    type: String, 
-    default: "ToDo" 
-  },
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-  deadline: {
-    type: String
-  },
-  author: String,
+  name:         { type: String, required: true, min: 5, max: 255 },
+  description:  { type: String, required: false, min: 5, max: 255 },
+  status:       { type: String,  default: "ToDo"  },
+  created_at:   { type: Date, default: Date.now, },
+  deadline:     { type: String },
+  author:       { type: String }
 });
 
-module.exports = Mongoose.model("Task", TasksSchema);
+module.exports = mongoose.model("task", taskSchema);

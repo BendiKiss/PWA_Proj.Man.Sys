@@ -1,30 +1,16 @@
-// What the Project can send to the db
-const Mongoose = require("mongoose");
-const ProjectsSchema = new Mongoose.Schema({
+const mongoose = require("mongoose");
+
+const projectSchema = new mongoose.Schema({
   
-  name: { 
-    type: String, 
-    required: true 
-  },
+  name: { type: String, required: true },
+  description: { type: String },
 
-  description: {
-    type: String,
-  },
+//created_at: { type: Date, default: Date.now },
 
-  status: { 
-    type: String, 
-    default: "not-done" 
-  },
+  deadline: {type: String}
 
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-
-  deadline: String,
-
-  UserId: String,
+//UserId: String
 
 });
 
-module.exports = Mongoose.model("Project", ProjectsSchema);
+module.exports = mongoose.model("project", projectSchema);

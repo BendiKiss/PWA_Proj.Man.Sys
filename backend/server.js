@@ -17,7 +17,7 @@ app.use(function( req, res, next){
 
 
 // Import routes
-const projectsRoutes = require("./routes/project");
+const projectRoutes = require("./routes/project");
 const tasksRoutes = require("./routes/task");
 const authRoutes = require("./routes/auth");
 
@@ -44,7 +44,7 @@ mongoose.connect(
     mongoose.connection.once("open", () =>  console.log("MongoDB connected successfully"));
 
 //post, put, delete -> CRUD
-app.use("/api/projects", projectsRoutes);
+app.use("/api/project", projectRoutes);
 
 //start-up server
 const PORT = process.env.PORT || 2000;

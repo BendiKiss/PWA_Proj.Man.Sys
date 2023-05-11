@@ -18,8 +18,9 @@ app.use(function( req, res, next){
 
 // Import routes
 const projectRoutes = require("./routes/project");
-const tasksRoutes = require("./routes/task");
 const authRoutes = require("./routes/auth");
+const tasksRoutes = require("./routes/task");
+
 
 //routes
 app.get("/api/welcome", (req, res) => {
@@ -30,6 +31,10 @@ app.get("/api/welcome", (req, res) => {
 
 // parse request of content type JSON
 app.use(bodyParser.json());
+
+//post, put, delete -> CRUD
+app.use("/api/project", projectRoutes);
+app.use("/api/user", authRoutes);
 
 //database connection
 mongoose.set('strictQuery', true);
@@ -42,9 +47,6 @@ mongoose.connect(
     .catch(err => console.log("Error connecting to MongoDB: " + error));
 
     mongoose.connection.once("open", () =>  console.log("MongoDB connected successfully"));
-
-//post, put, delete -> CRUD
-app.use("/api/project", projectRoutes);
 
 //start-up server
 const PORT = process.env.PORT || 2000;

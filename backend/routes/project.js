@@ -1,3 +1,4 @@
+// importing model and dependecies
 const router = require("express").Router();
 const project = require("../models/project");
 

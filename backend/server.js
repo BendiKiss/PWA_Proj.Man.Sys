@@ -19,7 +19,7 @@ app.use(function( req, res, next){
 // Import routes
 const projectRoutes = require("./routes/project");
 const authRoutes = require("./routes/auth");
-const tasksRoutes = require("./routes/task");
+const taskRoutes = require("./routes/task");
 
 
 //routes
@@ -35,6 +35,7 @@ app.use(bodyParser.json());
 //post, put, delete -> CRUD
 app.use("/api/project", projectRoutes);
 app.use("/api/user", authRoutes);
+app.use("/api/task", taskRoutes)
 
 //database connection
 mongoose.set('strictQuery', true);

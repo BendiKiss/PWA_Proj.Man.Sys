@@ -1,6 +1,7 @@
 // importing model and dependecies
 const router = require("express").Router();
 const project = require("../models/project");
+const { verifyToken } = require("../validation");
 
 
 //CRUD operations
@@ -28,6 +29,7 @@ router.get('/done', async (req, res) => {
   .catch(err => {res.status(500).send( {message: err.message }); })
 
 })
+
 //Read specific project -> GET
 router.get('/:id', async (req, res) => {
   project.findById(req.params.id)
@@ -35,6 +37,20 @@ router.get('/:id', async (req, res) => {
   .catch(err => {res.status(500).send( {message: err.message }); })
 
 })
+
+/*
+router.get('/:id', async (req, res) => {
+  try {
+      const projects = await project.findById({ _id : req.params.id })
+      res.json(projects)
+  }
+  catch (err) {
+      res.status(400).send({
+          message: err.message
+      })
+  }
+})
+*/
 
 //Create new project - POST
 router.post("/new", (req, res) => {
@@ -46,7 +62,7 @@ router.post("/new", (req, res) => {
 });
 
 // Update specific project -> PUT
-router.post("/update", (req, res) => {
+router.post("/update/:id", verifyToken, (req, res) => {
   const id = req.params.id;
 
   project.findByIdAndUpdate(id, req.body)
@@ -65,7 +81,8 @@ router.post("/update", (req, res) => {
 });
 
 // Delete specific project -> DELETE
-router.delete("/delete", (req, res) => {
+router.delete("/delete/:id", verifyToken, (req, res) => {
+
   const id = req.params.id;
 
   project.findByIdAndDelete(id)
@@ -82,5 +99,6 @@ router.delete("/delete", (req, res) => {
     
   .catch(err => {res.status(500).send( {message: "Error deleting this project." }); })
 });
+
 
 module.exports = router;

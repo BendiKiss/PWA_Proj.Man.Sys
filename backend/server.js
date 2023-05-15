@@ -26,7 +26,6 @@ const projectRoutes = require("./routes/project");
 const authRoutes = require("./routes/auth");
 const taskRoutes = require("./routes/task");
 
-
 //routes
 app.get("/api/welcome", (req, res) => {
 

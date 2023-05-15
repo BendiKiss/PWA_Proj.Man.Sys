@@ -13,13 +13,13 @@ tags:
   - name: User Routes
     description: Register and login
   - name: Get Routes
-    description: All get project routes
+    description: All get routes
   - name: Post Routes
-    description: All create project routes
+    description: All create routes
   - name: Put Routes
-    description: All update project routes
+    description: All update routes
   - name: Delete Routes
-    description: All delete project routes
+    description: All delete routes
 
 components:
   securitySchemes:
@@ -51,7 +51,34 @@ components:
         password:
           type: string
 
+    Task:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        deadline:
+          type: string
+          
+## schemas has to updated!          
+
 paths:
+  /user/:
+    get:
+      tags:
+        - Get Routes
+      summary: Retrieves a list of users
+      description: Retrieves a list of users as JSON objects.
+      responses:
+        200:
+          description: A list of users JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
 
   /user/register:
     post:
@@ -226,6 +253,120 @@ paths:
               schema:
                 $ref: "#/components/schemas/Project"
 
+  /task:
+    get:
+      tags:
+        - Get Routes
+      summary: Retrieves a list of tasks
+      description: Retrieves a list of tasks as JSON objects.
+      responses:
+        200:
+          description: A list of tasks JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+  /task/new:
+    post:
+      tags:
+        - Post Routes
+      summary: Create a new task
+      description: Create a new task
+      security:
+        - ApiKeyAuth: []      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+
+      responses:
+        201:
+          description: Task created succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+  
+  /task/{id}:
+    get:
+      tags:
+      - Get Routes
+      summary: Specific task
+      description: Retrieves a specific task based on it id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200:
+          description: A task in the format of a JSON object.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+
+  /task/update/{id}:
+    put:
+      tags:
+      - Put Routes
+      summary: Updates a specific task
+      description: Updates a specific task based on it id
+      security:
+        - ApiKeyAuth: []            
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+
+      responses:
+        201:
+          description: Task updated succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+
+  /task/delete/{id}:
+    delete:
+      tags:
+      - Delete Routes
+      summary: Deletes a specific task
+      description: Deletes a specific task based on it id
+      security:
+        - ApiKeyAuth: []            
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string      
+
+      responses:
+        201:
+          description: Task deleted succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
 
 
 

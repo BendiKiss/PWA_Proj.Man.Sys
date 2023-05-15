@@ -6,6 +6,16 @@ const jwt = require('jsonwebtoken');
 
 const { registerValidation, loginValidation } = require('../validation');
 
+// Get all users
+router.get('/', async (req, res) => {
+    try {
+        const users = await user.find();
+        res.json(users)
+    }
+    catch (err) {
+        res.status(400).send({ message: err.message });
+    }
+});
 
 // Registration
 router.post("/register", async (req, res) => {

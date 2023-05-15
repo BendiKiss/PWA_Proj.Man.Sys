@@ -5,6 +5,14 @@ const app = express();
 
 require ("dotenv-flow").config();
 
+//swagger dependesncies
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('yamljs');
+
+//setup Swagger
+const swaggerDefinition = yaml.load('./swagger.yaml');
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDefinition));
+
 // Handle CORS + middleware
 app.use(function( req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
@@ -12,9 +20,6 @@ app.use(function( req, res, next){
     res.header("Access-Control-Allow-Headers", "auth-token, Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
-
-//swagger
-
 
 // Import routes
 const projectRoutes = require("./routes/project");

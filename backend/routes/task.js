@@ -11,38 +11,7 @@ router.get('/', async (req, res) => {
         res.json(tasks)
     }
     catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
-    }
-});
-
-// Get specific task by id -> GET
-router.get('/get/:id', async (req, res) => {
-    try {
-        const tasks = await task.findById({ _id : req.params.id });
-        res.json(tasks)
-    }
-    catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
-    }
-});
-
-// Create new task -> POST
-router.post('/new', async (req, res) => {
-    try {
-        const newTask = new task(
-            req.body
-        );
-        const savedTask = await newTask.save()
-        res.json(savedTask)
-    }
-    catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+        res.status(400).send({ message: err.message });
     }
 });
 
@@ -53,9 +22,7 @@ router.get('/get/todo', async (req, res) => {
         res.json(tasks)
     }
     catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+        res.status(400).send({ message: err.message });
     }
 });
 
@@ -66,9 +33,7 @@ router.get('/get/doing', async (req, res) => {
         res.json(tasks)
     }
     catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+        res.status(400).send({ message: err.message });
     }
 });
 
@@ -79,41 +44,62 @@ router.get('/get/done', async (req, res) => {
         res.json(tasks)
     }
     catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+        res.status(400).send({ message: err.message });
+    }
+});
+
+// Get specific task by id -> GET
+router.get('/get/:id', async (req, res) => {
+    try {
+        const tasks = await task.findById({ _id : req.params.id });
+        res.json(tasks)
+    }
+    catch (err) {
+        res.status(400).send({ message: err.message });
+    }
+});
+
+// Create new task -> POST
+router.post('/new', verifyToken, async (req, res) => {
+    try {
+        const newTask = new task(
+            req.body
+        );
+        const savedTask = await newTask.save()
+        res.status(200).send( { message: "Task was successfully created."})
+    }
+    catch (err) {
+        res.status(400).send({message: err.message});
     }
 });
 
 // Update task -> PUT
-router.put('/update/:id', verifyToken, async (req, res) => {
+router.put("/update/:id", verifyToken, async (req, res) => {
     try {
-        const taskUpdate = await task.findByIdAndUpdate(
-            { _id: req.params.id }, 
-            { $set: req.body }
-    
-        )
-        res.json(taskUpdate)
-    }
+      const UpdTask = await task.updateOne(
+        { _id: req.params.id },
+        { $set: req.body }
+      );
+      res.status(200).send({ message: "Task was successfully updated."})
+    } 
     catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+      res.status(500).send( {message: "Error updating this task." });
     }
-});
+  });
 
 // Delete task -> DELETE
-router.delete('/delete/:id', verifyToken, async (req, res) => {
+router.delete("/delete/:id", verifyToken, async (req, res) => {
     try {
-        const taskDelete = await task.findByIdAndDelete({ _id : req.params.id })
-        res.json(taskDelete)
-    }
+      const DelTask = await task.findByIdAndDelete(
+        { _id: req.params.id },
+        { $set: req.body }
+      );
+      res.status(200).send({ message: "Task was successfully deleted."})
+    } 
     catch (err) {
-        res.status(400).send({
-            message: err.message
-        });
+      res.status(500).send( {message: "Error deleting this task." });
     }
-});
+  });
 
 
 module.exports = router

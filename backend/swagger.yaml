@@ -1,0 +1,267 @@
+openapi: 3.0.0
+info:
+  title: PWA_proj_man_sys
+  description: MongoDB ExpressJS NodeJS REST API
+  version: 1.0.0
+servers:
+  - url: http://localhost:2000/api/
+    description: Localhost development server
+  - url: https://
+    description: Remote deployment
+
+tags:
+  - name: User Routes
+    description: Register and login
+  - name: Get Routes
+    description: All get project routes
+  - name: Post Routes
+    description: All create project routes
+  - name: Put Routes
+    description: All update project routes
+  - name: Delete Routes
+    description: All delete project routes
+
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: auth-token
+
+  schemas:
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        deadline:
+          type: string
+    
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+paths:
+
+  /user/register:
+    post:
+      tags:
+        - User Routes
+      summary: Register a new User
+      description: Register a new User in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+
+      responses:
+        201:
+          description: User created succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  _id:
+                    type: string
+
+  /user/login:
+    post:
+      tags:
+        - User Routes
+      summary: Login a User
+      description: Login a User in order to get JWT token (auth-token)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      
+      responses:
+        200:
+          description: User logged in succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  data:
+                    type: string
+
+
+  /projects:
+    get:
+      tags:
+        - Get Routes
+      summary: Retrieves a list of projects
+      description: Retrieves a list of projects as JSON objects.
+      responses:
+        200:
+          description: A list of project JSON objects in an array.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+  /project/new:
+    post:
+      tags:
+        - Post Routes
+      summary: Create a new Project
+      description: Create a new Project
+      security:
+        - ApiKeyAuth: []      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+
+      responses:
+        201:
+          description: Project created succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+  
+  /project/{id}:
+    get:
+      tags:
+      - Get Routes
+      summary: Specific project
+      description: Retrieves a specific project based on it id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      responses:
+        200:
+          description: A project in the format of a JSON object.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+
+  /project/update/{id}:
+    put:
+      tags:
+      - Put Routes
+      summary: Updates a specific project
+      description: Updates a specific project based on it id
+      security:
+        - ApiKeyAuth: []            
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+
+      responses:
+        201:
+          description: Project updated succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+
+  /project/delete/{id}:
+    delete:
+      tags:
+      - Delete Routes
+      summary: Deletes a specific project
+      description: Deletes a specific project based on it id
+      security:
+        - ApiKeyAuth: []            
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: MongoDB id
+          schema:
+            type: string      
+
+      responses:
+        201:
+          description: Project deleted succesfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+  /boards/{field}/{value}:
+    get:
+      summary: Retrieves a liste of board based on the search filter
+      description: Retrieves a random board as a JSON objects.
+      parameters:
+        - in: path
+          name: field
+          required: true
+          description: Selected field from the document schema
+          schema:
+            type: string
+        - in: path
+          name: value
+          required: true
+          description: Selected value from the document schema
+          schema:
+            type: string
+      responses:
+        200:
+          description: A random board JSON object.
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Boards"

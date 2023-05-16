@@ -4,7 +4,6 @@ const router = express.Router();
 const project = require("../models/project");
 const { verifyToken } = require("../validation");
 
-
 //CRUD operations
 
 //Read all -> GET
@@ -17,7 +16,6 @@ router.get('/', async (req, res) => {
       res.status(500).send({ message: err.message });
   }
 });
-
 
 //Read all active project -> GET
 router.get('/active', async (req, res) => {
@@ -52,30 +50,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-/*
-router.get('/:id', async (req, res) => {
-  try {
-      const projects = await project.findById({ _id : req.params.id })
-      res.json(projects)
-  }
-  catch (err) {
-      res.status(400).send({
-          message: err.message
-      })
-  }
-})
-*/
-
 //Create new project - POST
-/*
-router.post("/new", verifyToken, async (req, res) => {
-  data = req.body;
-
-  project.insertMany(data)
-  .then(data => {res.send(data);})
-  .catch(err => {res.status(500).send( {message: err.message }); })
-});
-*/
 router.post('/new', verifyToken, async (req, res) => {
   try {
       const newProject = new project(
@@ -142,7 +117,6 @@ router.put("/update/:id", verifyToken, async (req, res) => {
   }
 });
 
-
 // Delete specific project -> DELETE
 router.delete("/delete/:id", verifyToken, async (req, res) => {
   try {
@@ -156,6 +130,5 @@ router.delete("/delete/:id", verifyToken, async (req, res) => {
     res.status(500).send( {message: "Error deleting this project." });
   }
 });
-
 
 module.exports = router;

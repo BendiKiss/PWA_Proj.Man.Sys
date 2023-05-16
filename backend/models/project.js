@@ -10,7 +10,7 @@ let projectSchema = new Schema({
   deadline:    { type: String },
   active:      { type: Boolean, default: true},
   owner:       { type: Schema.Types.ObjectId, required: true, ref:'user' },
-  team:       [{ type: Schema.Types.ObjectId, required: true, ref:'user' }]
+  team:       [{ type: Schema.Types.ObjectId, required: false, ref:'user' }]
 
 });
 

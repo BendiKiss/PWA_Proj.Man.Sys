@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:2000/api/
     description: Localhost development server
-  - url: https://
+  - url: https://pwa-backend-mg85.onrender.com
     description: Remote deployment
 
 tags:

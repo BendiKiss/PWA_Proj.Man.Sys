@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 let projectSchema = new Schema({
   
   name:        { type: String, required: true, min: 3, max: 100},

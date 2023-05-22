@@ -138,7 +138,7 @@ paths:
                     type: string
 
 
-  /projects:
+  /project:
     get:
       tags:
         - Get Routes

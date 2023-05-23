@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-
 let userSchema = new Schema(
     {
         name:       { type: String, required: true, min: 5,max: 150 },

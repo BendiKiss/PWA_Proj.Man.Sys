@@ -98,7 +98,13 @@ router.post("/login", async (req, res) => {
     //attach auth token to header
     res.header("auth-token", token).json({
         error: null,
-        data: { token}
+        data: { 
+            token,
+            userID: userObject._id,
+            username: userObject.username,
+            email: userObject.email,
+            userType: userObject.userLevel
+        }
     });
 });
 

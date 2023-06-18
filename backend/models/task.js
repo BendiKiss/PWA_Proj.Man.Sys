@@ -14,7 +14,7 @@ let taskSchema = new Schema({
   deadline:     { type: String },
   author:       { type: Schema.Types.ObjectId, required: true, ref:'user'},
   assignedTo:   [{ type: Schema.Types.ObjectId, required: true, ref:'user'}],
-  project_id:   [{ type: Schema.Types.ObjectId, required: true, ref:'project'}]
+  project_id:   { type: Schema.Types.ObjectId, required: true, ref:'project'}
 });
 
 module.exports = mongoose.model("task", taskSchema);

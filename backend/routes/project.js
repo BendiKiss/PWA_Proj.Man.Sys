@@ -51,7 +51,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //Create new project - POST
-router.post('/new', verifyToken, async (req, res) => {
+router.post('/new', /* verifyToken, */ async (req, res) => {
   try {
       const newProject = new project(
           req.body
@@ -104,7 +104,7 @@ router.put('/update/:id', verifyToken, async (req, res) => {
 */
 
 //works
-router.put("/update/:id", verifyToken, async (req, res) => {
+router.put("/update/:id", /* verifyToken, */ async (req, res) => {
   try {
     const UpdProject = await project.updateOne(
       { _id: req.params.id },
@@ -118,7 +118,7 @@ router.put("/update/:id", verifyToken, async (req, res) => {
 });
 
 // Delete specific project -> DELETE
-router.delete("/delete/:id", verifyToken, async (req, res) => {
+router.delete("/delete/:id", /* verifyToken, */ async (req, res) => {
   try {
     const DelProject = await project.findByIdAndDelete(
       { _id: req.params.id },

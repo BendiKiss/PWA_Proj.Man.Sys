@@ -26,7 +26,7 @@ components:
     ApiKeyAuth:        # arbitrary name for the security scheme
       type: apiKey
       in: header       # can be "header", "query" or "cookie"
-      name: auth-token
+      name: Authorization
 
   schemas:
     Project:
@@ -111,7 +111,7 @@ paths:
       tags:
         - User Routes
       summary: Login a User
-      description: Login a User in order to get JWT token (auth-token)
+      description: Login a User in order to get JWT token (Authorization)
       requestBody:
         required: true
         content:

@@ -88,15 +88,15 @@ router.post("/login", async (req, res) => {
             username: user.username,
             id: user._id
         },
-        //TOKEN_SECRET
-        process.env.TOKEN_SECRET,
+        process.env.TOKEN_SECRET, 
         
-        //EXPIRATION TIME
-        { expiresIn: process.env.JWT_EXPIRES_IN },
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        },
     );
 
     //attach auth token to header
-    res.header("auth-token", token).json({
+    res.header("Authorization", token).json({
         error: null,
         data: { 
             token,

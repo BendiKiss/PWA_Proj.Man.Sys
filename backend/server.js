@@ -17,7 +17,7 @@ app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDefinition));
 app.use(function( req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE"); // If using .fetch and not axios
-    res.header("Access-Control-Allow-Headers", "auth-token, Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
 
@@ -54,7 +54,7 @@ mongoose.connect(
     mongoose.connection.once("open", () =>  console.log("MongoDB connected successfully"));
 
 //start-up server
-const PORT = process.env.PORT || 2000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, function() {
     console.log("Server is running on port " + PORT);

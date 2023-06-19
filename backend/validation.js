@@ -25,7 +25,7 @@ const registerValidation = (data) => {
 
 // middleware to verify token
 const verifyToken = (req, res, next) => {
-    const token = req.header("auth-token");
+    const token = req.headers.authorization.split(' ')[1];
 
     //if there is no token in the request, then fail
     if (!token) return res.status(401).json({ error: "Access Denied" });

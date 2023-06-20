@@ -65,44 +65,6 @@ router.post('/new', /* verifyToken, */ async (req, res) => {
 });
 
 
-// Update specific project -> PUT
-/*
-// doesnt work, getting no response back
-router.put("/update/:id", verifyToken, (req, res) => {
-  const id = req.params.id;
-
-  project.updateOne(id, req.body)
-  .then(data => {
-    if(!data)
-    {
-      res.status(404).send({ message: "Cannot update this project, maybe project was not found."})
-    }
-    else
-    {
-      res.status({ message: "Project was successfully updated."})
-    }
-  })
-    
-  .catch(err => {res.status(500).send( {message: "Error updating this project." }); })
-});
-
-router.put('/update/:id', verifyToken, async (req, res) => {
-    try {
-        const projectUpdate = await project.findByIdAndUpdate(
-            { _id: req.params.id }, 
-            { $set: req.body }
-    
-        )
-        res.json(projectUpdate)
-    }
-    catch (err) {
-        res.status(400).send({
-            message: err.message
-        })
-    }
-})
-*/
-
 //works
 router.put("/update/:id", /* verifyToken, */ async (req, res) => {
   try {

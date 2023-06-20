@@ -15,6 +15,13 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get("/project/:projectId", (req, res) => {
+    task.find({ projectId: req.params.projectId })
+  
+    .then(data => {res.send(data);})
+    .catch(err => {res.status(500).send({message: err.message });})
+  });
+
 // Get ToDo tasks -> GET
 router.get('/get/todo', async (req, res) => {
     try {
@@ -60,7 +67,7 @@ router.get('/get/:id', async (req, res) => {
 });
 
 // Create new task -> POST
-router.post('/new', verifyToken, async (req, res) => {
+router.post('/new' /*verifyToken*/, async (req, res) => {
     try {
         const newTask = new task(
             req.body
@@ -74,7 +81,7 @@ router.post('/new', verifyToken, async (req, res) => {
 });
 
 // Update task -> PUT
-router.put("/update/:id", verifyToken, async (req, res) => {
+router.put("/update/:id", /*verifyToken,*/ async (req, res) => {
     try {
       const UpdTask = await task.updateOne(
         { _id: req.params.id },
@@ -88,7 +95,7 @@ router.put("/update/:id", verifyToken, async (req, res) => {
   });
 
 // Delete task -> DELETE
-router.delete("/delete/:id", verifyToken, async (req, res) => {
+router.delete("/delete/:id", /*verifyToken,*/ async (req, res) => {
     try {
       const DelTask = await task.findByIdAndDelete(
         { _id: req.params.id },

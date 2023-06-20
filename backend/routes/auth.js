@@ -16,17 +16,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get specific user
-router.get('/:id', async (req, res) => {
-    try {
-        const users = await user.findById(req.params.id);
-        res.json(users)
-    }
-    catch (err) {
-        res.status(400).send({ message: err.message });
-    }
-});
-
 // Registration
 router.post("/register", async (req, res) => {
 
